@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My bestie's birthday</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image: linear-gradient(to right, #302f31, #000000);
+            text-align: center;
+            padding: 1em;
+        }
+
+        #message {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            font-size: 2rem;
+            line-height: 1.4;
+            max-width: 90vw;
+            color: #ffffff;
+            font-family: sans-serif !important;
+            font-weight: 600;
+            font-size: 45px;
+            display: none;
+        }
+
+        #message.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 412px) {
+            #message {
+                font-size: 24px;
+            }
+        }
+
+        .start {
+            width: 250px;
+            height: 325px;
+            background-color: #181818;
+            border: 5px solid #8f1f8f;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        small {
+            color: #ffffff63;
+            font-size: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        button {
+            width: 90px;
+            height: 45px;
+            color: #ffffff;
+            background-color: #8f1f8f;
+            border: 2px solid #a6a6a6;
+            border-radius: 4px;
+        }
+
+        span {
+            position: absolute;
+            bottom: 20px;
+            left: 25px;
+            color: #3b3b3b;
+        }
+
+        h3 {
+            display: none;
+            position: absolute;
+            bottom: 45px;
+            left: 25px;
+            color: #5c5c5c;
+        }
+
+        #small {
+            display: none;
+            position: absolute;
+            bottom: 30px;
+            left: 27px;
+            color: #989898;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="start">
+        <p>Привет! это простой 2х минутный тест.</p>
+        <small>нажми кнопку ниже чтобы начать</small>
+        <div class="buttons">
+            <button type="button" class="yes">Да</button>
+            <button type="button" class="no">Нет</button>
+        </div>
+        <div class="huh">
+            <span class="noway">НЕ НАЖИМАЙ НА "НЕТ"</span>
+            <h3 class="i-said">Я тебя предупредил :D</h3>
+            <small id="small">теперь у тебя нету другого варианта</small>
+        </div>
+    </div>
+    <div id="message"></div>
+    <script>
+        const phrases = [
+            "XD, шучу это не тест",
+            "Просто дочитай до конца",
+            "Йоу как ты?",
+            "Хочу поздравить тебя с твоим 14 летием!",
+            "Огромная благодарность за то что ты есть",
+            "Мы дружим уже 8 лет, и многое пережили вместе",
+            "Гуляли, общались, играли, смеялись..",
+            "И делали всё что придёт в голову",
+            "Да.. были ссоры и разногласия",
+            "Но крепкая дружба не давала нам расставаться",
+            "Спасибо что ты есть у нас в жизни",
+            "Ты наша самая лучшая подруга :)",
+            "И ты единственный понимающий меня человек",
+            "Не считающий меня тупым, и всегда поддерживаешь",
+            "Я рад что познакомился с тобой",
+            "Не знаю что я бы делал без тебя",
+            "Извини на этот ДР я не смог накопить на подарок",
+            "Так как я был месяц вне дома..",
+            "Но я обещаю",
+            "Что порадую тебя чем то в скором времени",
+            "Муслима..",
+            "Ты самая афигеная подруга на земле",
+            "Не думаю что найду ещё кого то как ты..",
+            "Хочу тебя опять же поблагодарить за всё",
+            "С днём рождения тебя!",
+            "Желаю всего наилучшего в жизни!",
+            "Счастья, успеха в жизни",
+            "И конечно же много-много деняг =)",
+            "Не знаю как ты отреагируешь",
+            "И примешь ли этот подарок",
+            "Но я надеюсь на лучшее :)",
+            "Конец =)"
+      ];
+
+        const messageEl = document.getElementById("message");
+        const yes = document.querySelector(".yes");
+        const no = document.querySelector(".no");
+        const noway = document.querySelector(".noway");
+        const iSaid = document.querySelector(".i-said");
+        const noVariant = document.getElementById("small");
+        const start = document.querySelector(".start");
+
+        yes.addEventListener("click", () => {
+            start.style.display = "none";
+            messageEl.style.display = "block";
+
+            const totalPerPhrase = 5000;
+            const fadeTime = 1000;
+            const visibleTime = totalPerPhrase - fadeTime * 2;
+            let offset = 0;
+
+            phrases.forEach((text, index) => {
+                setTimeout(() => {
+                    messageEl.textContent = text;
+                    messageEl.classList.add("visible");
+                }, offset);
+                setTimeout(() => {
+                    messageEl.classList.remove("visible");
+                }, offset + fadeTime + visibleTime);
+
+                offset += totalPerPhrase;
+            });
+
+            setTimeout(() => {
+                messageEl.textContent = "";
+            }, offset);
+        });
+
+        no.addEventListener("click", () => {
+            noway.style.display = "none";
+            no.style.display = "none";
+            iSaid.style.display = "block";
+            noVariant.style.display = "block";
+        });
+
+    </script>
+</body>
+
+</html>
